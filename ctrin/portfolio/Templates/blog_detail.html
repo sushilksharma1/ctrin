@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} | Ctrin Interiors Blog{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<section class="page-header bg-light py-4">
+    <div class="container-lg">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'portfolio:home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'portfolio:blog' %}">Blog</a></li>
+                <li class="breadcrumb-item active">{{ post.title }}</li>
+            </ol>
+        </nav>
+        <h1 class="mb-3">{{ post.title }}</h1>
+        <div class="text-muted">
+            <small>
+                <i class="fas fa-user"></i> By {{ post.author.get_full_name|default:post.author.username }}
+                <span class="mx-2">•</span>
+                <i class="fas fa-calendar"></i> {{ post.created_at|date:"F d, Y" }}
+            </small>
+        </div>
+    </div>
+</section>
+
+<!-- Article Content -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="row g-5">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                {% if post.featured_image %}
+                <img src="{{ post.featured_image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+                {% endif %}
+
+                <div class="article-content">
+                    {{ post.content|linebreaks }}
+                </div>
+
+                {% if post.tags %}
+                <div class="mt-5 pt-4 border-top">
+                    <h6 class="mb-3">Tags:</h6>
+                    <div>
+                        {% for tag in post.get_tags_list %}
+                        <span class="badge bg-primary me-2 mb-2">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Share Buttons -->
+                <div class="mt-5 pt-4 border-top">
+                    <h6 class="mb-3">Share:</h6>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="btn btn-sm btn-outline-primary me-2">
+                        <i class="fab fa-facebook-f"></i> Share
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="btn btn-sm btn-outline-primary me-2">
+                        <i class="fab fa-twitter"></i> Tweet
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" class="btn btn-sm btn-outline-primary">
+                        <i class="fab fa-linkedin-in"></i> Share
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Recent Posts -->
+                {% if recent_posts %}
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">Recent Posts</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-unstyled">
+                            {% for recent in recent_posts %}
+                            <li class="border-bottom p-3">
+                                <a href="{{ recent.get_absolute_url }}" class="text-decoration-none">{{ recent.title }}</a>
+                                <p class="text-muted small mt-1">{{ recent.created_at|date:"M d, Y" }}</p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- CTA -->
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <h6 class="card-title">Need Design Help?</h6>
+                        <p class="card-text small">Let's discuss your interior design project.</p>
+                        <a href="{% url 'portfolio:contact' %}" class="btn btn-light btn-sm">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .article-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    .article-content p {
+        margin-bottom: 1.5rem;
+    }
+    .article-content h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .article-content h3 {
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+</style>
+{% endblock %}

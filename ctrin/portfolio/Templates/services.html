@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Services | Ctrin Interiors{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-light py-5">
+    <div class="container-lg">
+        <h1 class="mb-3">Our Services</h1>
+        <p class="text-muted">Comprehensive interior design solutions tailored to your needs</p>
+    </div>
+</section>
+
+<!-- Services Grid -->
+{% if services %}
+<section class="py-5">
+    <div class="container-lg">
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card h-100 p-4 border rounded">
+                    {% if service.icon %}
+                    <div class="mb-4">
+                        <i class="{{ service.icon }} fa-4x text-primary"></i>
+                    </div>
+                    {% elif service.image %}
+                    <img src="{{ service.image.url }}" class="img-fluid rounded mb-4" alt="{{ service.name }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    
+                    <h4 class="mb-3">{{ service.name }}</h4>
+                    <p class="text-muted mb-3">{{ service.description }}</p>
+                    
+                    {% if service.get_features_list %}
+                    <ul class="list-unstyled">
+                        {% for feature in service.get_features_list %}
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="ms-2">{{ feature }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Why Choose Us -->
+<section class="py-5 bg-light">
+    <div class="container-lg">
+        <h2 class="text-center mb-4">Why Choose Us</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-award fa-3x text-primary"></i>
+                    </div>
+                    <h5>Expert Team</h5>
+                    <p class="text-muted">Highly skilled and experienced interior designers</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-lightbulb fa-3x text-primary"></i>
+                    </div>
+                    <h5>Creative Solutions</h5>
+                    <p class="text-muted">Innovative designs that reflect your style and personality</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-handshake fa-3x text-primary"></i>
+                    </div>
+                    <h5>Client Focused</h5>
+                    <p class="text-muted">Your satisfaction is our top priority</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container-lg">
+        <h2 class="mb-3">Ready to Get Started?</h2>
+        <p class="lead mb-4">Let's create the perfect interior space for you.</p>
+        <a href="{% url 'portfolio:contact' %}" class="btn btn-light btn-lg">Schedule a Consultation</a>
+    </div>
+</section>
+{% endblock %}

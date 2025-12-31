@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} | Ctrin Interiors{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-light py-4">
+    <div class="container-lg">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'portfolio:home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'portfolio:projects' %}">Projects</a></li>
+                <li class="breadcrumb-item active">{{ project.title }}</li>
+            </ol>
+        </nav>
+        <h1 class="mb-2">{{ project.title }}</h1>
+        {% if project.category %}
+        <span class="badge bg-primary">{{ project.category.name }}</span>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="row g-5">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Featured Image -->
+                {% if project.featured_image %}
+                <img src="{{ project.featured_image.url }}" class="img-fluid mb-4 rounded" alt="{{ project.title }}">
+                {% endif %}
+
+                <!-- Description -->
+                <h2 class="mb-3">Project Overview</h2>
+                <p class="lead">{{ project.description }}</p>
+                {% if project.detailed_description %}
+                <p>{{ project.detailed_description }}</p>
+                {% endif %}
+
+                <!-- Gallery -->
+                {% if project.images.all %}
+                <h3 class="mt-5 mb-3">Project Gallery</h3>
+                <div class="row g-3">
+                    {% for img in project.images.all %}
+                    <div class="col-md-6">
+                        <img src="{{ img.image.url }}" class="img-fluid rounded" alt="{{ img.caption }}">
+                        {% if img.caption %}
+                        <p class="text-muted small mt-2">{{ img.caption }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Project Info -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Project Details</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if project.client_name %}
+                        <div class="mb-3">
+                            <strong>Client</strong>
+                            <p class="text-muted">{{ project.client_name }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if project.location %}
+                        <div class="mb-3">
+                            <strong><i class="fas fa-map-marker-alt"></i> Location</strong>
+                            <p class="text-muted">{{ project.location }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if project.project_date %}
+                        <div class="mb-3">
+                            <strong><i class="fas fa-calendar"></i> Date</strong>
+                            <p class="text-muted">{{ project.project_date|date:"F Y" }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if project.duration %}
+                        <div class="mb-3">
+                            <strong><i class="fas fa-hourglass-end"></i> Duration</strong>
+                            <p class="text-muted">{{ project.duration }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if project.budget %}
+                        <div class="mb-3">
+                            <strong><i class="fas fa-dollar-sign"></i> Budget</strong>
+                            <p class="text-muted">{{ project.budget }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Interested in a Similar Project?</h5>
+                        <p class="card-text">Let's discuss your interior design needs.</p>
+                        <a href="{% url 'portfolio:contact' %}" class="btn btn-light">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Projects -->
+        {% if related_projects %}
+        <div class="mt-5 pt-5 border-top">
+            <h3 class="mb-4">Related Projects</h3>
+            <div class="row g-4">
+                {% for related in related_projects %}
+                <div class="col-md-4">
+                    <div class="card project-card h-100">
+                        {% if related.featured_image %}
+                        <img src="{{ related.featured_image.url }}" class="card-img-top" alt="{{ related.title }}" style="height: 250px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ related.title }}</h5>
+                            <p class="card-text text-muted">{{ related.description|truncatewords:10 }}</p>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <a href="{{ related.get_absolute_url }}" class="btn btn-primary btn-sm">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

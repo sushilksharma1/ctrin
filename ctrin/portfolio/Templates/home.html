@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Ctrin Interiors - Modular Kitchens & Interior Design in Gurgaon{% endblock %}
+
+{% block meta_description %}Best Interior Designer in Gurgaon | Modular Kitchens, Wardrobes & Complete Interiors | Ctrin Interiors{% endblock %}
+
+{% block content %}
+
+
+<!-- Hero Section with Call to Action -->
+<section class="hero-section text-white py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 600px; display: flex; align-items: center;">
+    <div class="container-lg">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold mb-4">Transforming Spaces, Touching Lives</h1>
+                <p class="lead mb-4">Premium Interior Design Solutions | Modular Kitchens | Wardrobes | Complete Home Interiors</p>
+                <p class="mb-4">Since 2018, Ctrin Interiors has delivered excellence to over 1,000+ satisfied clients with innovative designs and unwavering quality.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{% url 'portfolio:projects' %}" class="btn btn-light btn-lg fw-bold">View Our Work</a>
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-outline-light btn-lg fw-bold">Get Consultation</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="bg-white bg-opacity-10 rounded-lg p-5 backdrop-blur">
+                    <i class="fas fa-home fa-5x mb-3 text-white"></i>
+                    <h3 class="text-white">Design Your Dream Space</h3>
+                    <p class="text-white-50">From concept to completion, we handle every detail with precision</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5 bg-light">
+    <div class="container-lg">
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body py-4">
+                        <h2 class="text-primary fw-bold mb-2">1000+</h2>
+                        <p class="text-muted mb-0">Happy Clients</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body py-4">
+                        <h2 class="text-primary fw-bold mb-2">650+</h2>
+                        <p class="text-muted mb-0">Projects Completed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body py-4">
+                        <h2 class="text-primary fw-bold mb-2">13+</h2>
+                        <p class="text-muted mb-0">Years of Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects -->
+{% if featured_projects %}
+<section class="py-5">
+    <div class="container-lg">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Our Featured Projects</h2>
+            <p class="text-muted lead">Discover our exquisite portfolio of completed interior design projects</p>
+        </div>
+        <div class="row g-4">
+            {% for project in featured_projects %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card project-card h-100 overflow-hidden border-0 shadow-sm">
+                    {% if project.featured_image %}
+                    <div style="height: 250px; overflow: hidden;">
+                        <img src="{{ project.featured_image.url }}" class="card-img-top w-100 h-100" alt="{{ project.title }}" style="object-fit: cover;">
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ project.title }}</h5>
+                        {% if project.category %}
+                        <span class="badge bg-primary mb-2">{{ project.category.name }}</span>
+                        {% endif %}
+                        <p class="card-text text-muted">{{ project.description|truncatewords:20 }}</p>
+                        {% if project.location %}
+                        <p class="small"><i class="fas fa-map-marker-alt text-primary"></i> {{ project.location }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white border-0 pt-0">
+                        <a href="{{ project.get_absolute_url }}" class="btn btn-sm btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'portfolio:projects' %}" class="btn btn-primary btn-lg">View All Projects</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Services Section -->
+{% if services %}
+<section class="py-5 bg-light">
+    <div class="container-lg">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Our Services</h2>
+            <p class="text-muted lead">Comprehensive interior design solutions tailored to your needs</p>
+        </div>
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card h-100 border-0 shadow-sm p-4">
+                    {% if service.icon %}
+                    <div class="mb-3 text-primary">
+                        <i class="{{ service.icon }} fa-3x"></i>
+                    </div>
+                    {% elif service.image %}
+                    <img src="{{ service.image.url }}" class="img-fluid rounded mb-3" alt="{{ service.name }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <h5 class="card-title fw-bold mb-2">{{ service.name }}</h5>
+                    <p class="text-muted small">{{ service.description }}</p>
+                    {% if service.get_features_list %}
+                    <ul class="list-unstyled small mt-3">
+                        {% for feature in service.get_features_list|slice:":3" %}
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="ms-2">{{ feature }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'portfolio:services' %}" class="btn btn-primary btn-lg">Explore All Services</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Design Process Section -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Our Design Process</h2>
+            <p class="text-muted lead">From vision to reality in 7 simple steps</p>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm text-center h-100 p-4">
+                    <div class="badge bg-primary rounded-circle p-3 mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-white fw-bold">1</span>
+                    </div>
+                    <h6 class="fw-bold">Consultation</h6>
+                    <p class="small text-muted">Understand your vision & requirements</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm text-center h-100 p-4">
+                    <div class="badge bg-primary rounded-circle p-3 mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-white fw-bold">2</span>
+                    </div>
+                    <h6 class="fw-bold">Design</h6>
+                    <p class="small text-muted">Create custom design concepts</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm text-center h-100 p-4">
+                    <div class="badge bg-primary rounded-circle p-3 mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-white fw-bold">3</span>
+                    </div>
+                    <h6 class="fw-bold">Planning</h6>
+                    <p class="small text-muted">Detailed project planning & timeline</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm text-center h-100 p-4">
+                    <div class="badge bg-primary rounded-circle p-3 mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-white fw-bold">4</span>
+                    </div>
+                    <h6 class="fw-bold">Execution</h6>
+                    <p class="small text-muted">Professional implementation & quality check</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+{% if featured_testimonials %}
+<section class="py-5 bg-light">
+    <div class="container-lg">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">What Our Clients Say</h2>
+            <p class="text-muted lead">95% Customer Satisfaction Rate</p>
+        </div>
+        <div class="row g-4">
+            {% for testimonial in featured_testimonials %}
+            <div class="col-md-4">
+                <div class="card testimonial-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= testimonial.rating %}
+                                <i class="fas fa-star text-warning"></i>
+                                {% else %}
+                                <i class="far fa-star text-muted"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="card-text text-muted">{{ testimonial.content }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <strong>{{ testimonial.client_name }}</strong>
+                        {% if testimonial.client_company %}
+                        <p class="text-muted small mb-0">{{ testimonial.client_company }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Why Choose Us Section -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Why Choose Ctrin Interiors?</h2>
+            <p class="text-muted lead">Excellence in Every Project</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="d-flex gap-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-success fa-2x mt-1"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold">Premium Quality Materials</h5>
+                        <p class="text-muted">We use only the best in-class products and materials</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex gap-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-success fa-2x mt-1"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold">10 Years Warranty</h5>
+                        <p class="text-muted">Extended warranty on products for your peace of mind</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex gap-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-success fa-2x mt-1"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold">Expert Team</h5>
+                        <p class="text-muted">Experienced designers and skilled craftspeople</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex gap-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-success fa-2x mt-1"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold">After-Sales Service</h5>
+                        <p class="text-muted">One year of free after-sales service included</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container-lg">
+        <h2 class="mb-3 fw-bold">Ready to Transform Your Space?</h2>
+        <p class="lead mb-4">Let's bring your vision to life with our professional design solutions</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{% url 'portfolio:contact' %}" class="btn btn-light btn-lg fw-bold">Schedule Consultation</a>
+            <a href="tel:{{ site_settings.phone }}" class="btn btn-outline-light btn-lg fw-bold">
+                <i class="fas fa-phone"></i> Call Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Blog Posts (Optional) -->
+{% if recent_posts %}
+<section class="py-5 bg-light">
+    <div class="container-lg">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Design Tips & Insights</h2>
+            <p class="text-muted lead">Latest articles from our design experts</p>
+        </div>
+        <div class="row g-4">
+            {% for post in recent_posts %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card blog-card border-0 shadow-sm h-100">
+                    {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <p class="text-muted small"><i class="fas fa-calendar"></i> {{ post.created_at|date:"M d, Y" }}</p>
+                        <h6 class="card-title fw-bold">{{ post.title }}</h6>
+                        <p class="card-text text-muted small">{{ post.excerpt|default:post.content|truncatewords:15 }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

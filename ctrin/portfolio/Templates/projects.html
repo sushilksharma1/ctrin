@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects | Ctrin Interiors{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-light py-5">
+    <div class="container-lg">
+        <h1 class="mb-3">Our Projects</h1>
+        <p class="text-muted">Explore our portfolio of exceptional interior design projects</p>
+    </div>
+</section>
+
+<!-- Filters -->
+<section class="py-4 border-bottom">
+    <div class="container-lg">
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'portfolio:projects' %}" class="btn btn-sm {% if not selected_category %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                All Projects
+            </a>
+            {% for category in categories %}
+            <a href="?category={{ category.slug }}" class="btn btn-sm {% if selected_category == category.slug %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                {{ category.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="py-5">
+    <div class="container-lg">
+        {% if projects %}
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card project-card h-100 overflow-hidden">
+                    {% if project.featured_image %}
+                    <img src="{{ project.featured_image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 300px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        {% if project.category %}
+                        <span class="badge bg-secondary mb-2">{{ project.category.name }}</span>
+                        {% endif %}
+                        <p class="card-text text-muted">{{ project.description|truncatewords:15 }}</p>
+                        {% if project.location %}
+                        <p class="small"><i class="fas fa-map-marker-alt"></i> {{ project.location }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="{{ project.get_absolute_url }}" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1{% if selected_category %}&category={{ selected_category }}{% endif %}">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}">Previous</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item active"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if selected_category %}&category={{ selected_category }}{% endif %}">Last</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        {% else %}
+        <div class="alert alert-info text-center">
+            <p class="mb-0">No projects found in this category.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

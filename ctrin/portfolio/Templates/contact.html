@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | Ctrin Interiors{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-light py-5">
+    <div class="container-lg">
+        <h1 class="mb-3">Get In Touch</h1>
+        <p class="text-muted">We'd love to hear about your interior design project</p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="row g-5">
+            <!-- Contact Form -->
+            <div class="col-lg-8">
+                <h2 class="mb-4">Send us a Message</h2>
+                
+                <form method="post" class="contact-form">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.email }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form.phone }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form.project_type }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.subject }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.budget }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.message }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-4">
+                <h2 class="mb-4">Contact Information</h2>
+                
+                {% if site_settings.phone %}
+                <div class="contact-info mb-4">
+                    <h6 class="mb-2"><i class="fas fa-phone text-primary"></i> Phone</h6>
+                    <p><a href="tel:{{ site_settings.phone }}" class="text-decoration-none">{{ site_settings.phone }}</a></p>
+                </div>
+                {% endif %}
+
+                {% if site_settings.email %}
+                <div class="contact-info mb-4">
+                    <h6 class="mb-2"><i class="fas fa-envelope text-primary"></i> Email</h6>
+                    <p><a href="mailto:{{ site_settings.email }}" class="text-decoration-none">{{ site_settings.email }}</a></p>
+                </div>
+                {% endif %}
+
+                {% if site_settings.address %}
+                <div class="contact-info mb-4">
+                    <h6 class="mb-2"><i class="fas fa-map-marker-alt text-primary"></i> Address</h6>
+                    <p>{{ site_settings.address }}</p>
+                </div>
+                {% endif %}
+
+                <!-- Business Hours (Optional) -->
+                <div class="contact-info mb-4">
+                    <h6 class="mb-2"><i class="fas fa-clock text-primary"></i> Business Hours</h6>
+                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <p>Saturday: 10:00 AM - 4:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+
+                <!-- Social Links -->
+                {% if site_settings.facebook_url or site_settings.instagram_url or site_settings.twitter_url or site_settings.linkedin_url %}
+                <div class="contact-info">
+                    <h6 class="mb-2">Follow Us</h6>
+                    <div class="social-links">
+                        {% if site_settings.facebook_url %}
+                        <a href="{{ site_settings.facebook_url }}" class="text-primary me-3" target="_blank">
+                            <i class="fab fa-facebook-f fa-lg"></i>
+                        </a>
+                        {% endif %}
+                        {% if site_settings.instagram_url %}
+                        <a href="{{ site_settings.instagram_url }}" class="text-primary me-3" target="_blank">
+                            <i class="fab fa-instagram fa-lg"></i>
+                        </a>
+                        {% endif %}
+                        {% if site_settings.twitter_url %}
+                        <a href="{{ site_settings.twitter_url }}" class="text-primary me-3" target="_blank">
+                            <i class="fab fa-twitter fa-lg"></i>
+                        </a>
+                        {% endif %}
+                        {% if site_settings.linkedin_url %}
+                        <a href="{{ site_settings.linkedin_url }}" class="text-primary me-3" target="_blank">
+                            <i class="fab fa-linkedin-in fa-lg"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section (Optional) -->
+<section class="py-5 bg-light">
+    <div class="container-lg">
+        <h2 class="text-center mb-4">Visit Us</h2>
+        <div id="map" style="height: 400px; border-radius: 8px; background-color: #e9ecef;">
+            <!-- You can integrate Google Maps or other mapping service here -->
+            <div class="d-flex align-items-center justify-content-center h-100 bg-secondary bg-opacity-10 rounded">
+                <p class="text-muted">Map will be integrated here</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -8,38 +8,10 @@
 {% block content %}
 
 
-
-<section class="hero-section-temp text-white py-5"
-         style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 600px; display: flex; align-items: center;">
-
-    <div class="container h-100">
-      <div class="photo-strip-wrapper bg-white bg-opacity-10 rounded-4 p-3">
-        <div class="photo-strip" id="autoStrip">
-          <div class="photo-card">
-            <img src="/static/images/pic1.jpg"
-                 class="img-fluid rounded-3"
-                 alt="Modern living room interior">
-          </div>
-          <div class="photo-card">
-            <img src="/static/images/pic2.jpg"
-                 class="img-fluid rounded-3"
-                 alt="Premium modular kitchen">
-          </div>
-          <!-- more cards -->
-        </div>
-      </div>
-  </div>
-</section>
-
-
-
-
-<!-- Hero Section with Horizontal Photo Scroll -->
-<section class="hero-section text-white py-5"
-         style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 600px; display: flex; align-items: center;">
+<!-- Hero Section with Call to Action -->
+<section class="hero-section text-white py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 600px; display: flex; align-items: center;">
     <div class="container-lg">
         <div class="row align-items-center g-4">
-            <!-- Left content -->
             <div class="col-lg-6">
                 <h1 class="display-3 fw-bold mb-4">Transforming Spaces, Touching Lives</h1>
                 <p class="lead mb-4">Premium Interior Design Solutions | Modular Kitchens | Wardrobes | Complete Home Interiors</p>
@@ -49,36 +21,16 @@
                     <a href="{% url 'portfolio:contact' %}" class="btn btn-outline-light btn-lg fw-bold">Get Consultation</a>
                 </div>
             </div>
-
-            <!-- Right: horizontal scrolling photos -->
-            <div class="col-lg-6">
-                <div class="photo-strip-wrapper bg-white bg-opacity-10 rounded-4 p-3">
-                    <h3 class="text-white mb-3 text-center">Recent Projects</h3>
-                    <div class="photo-strip d-flex flex-nowrap">
-                        <!-- Repeat these items with real project images -->
-                        <div class="photo-card me-3">
-                            <img src="/static/images/pic1.jpg"
-                                 class="img-fluid rounded-3"
-                                 alt="Modern living room interior">
-                        </div>
-                        <div class="photo-card me-3">
-                            <img src="/static/images/pic2.jpg"
-                                 class="img-fluid rounded-3"
-                                 alt="Premium modular kitchen">
-                        </div>
-                        <div class="photo-card me-3">
-                            <img src="/static/images/pic3.mp4"
-                                 class="img-fluid rounded-3"
-                                 alt="Elegant bedroom design">
-                        </div>
-                        <!-- Add more project cards as needed -->
-                    </div>
+            <div class="col-lg-6 text-center">
+                <div class="bg-white bg-opacity-10 rounded-lg p-5 backdrop-blur">
+                    <i class="fas fa-home fa-5x mb-3 text-white"></i>
+                    <h3 class="text-white">Design Your Dream Space</h3>
+                    <p class="text-white-50">From concept to completion, we handle every detail with precision</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 
 <!-- Statistics Section -->
 <section class="py-5 bg-light">

@@ -3,7 +3,7 @@
  */
 
 // Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initNavbar();
     initSmoothScroll();
     initFormValidation();
@@ -34,7 +34,7 @@ function initNavbar() {
  */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
 
@@ -57,7 +57,7 @@ function initFormValidation() {
     const forms = document.querySelectorAll('form');
 
     forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function (e) {
             if (!form.checkValidity()) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -103,7 +103,7 @@ function initAnimations() {
                     animationObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }, {threshold: 0.1});
 
         document.querySelectorAll('.card, .service-card, .project-card').forEach(element => {
             animationObserver.observe(element);
@@ -117,11 +117,11 @@ function initAnimations() {
 function handleContactFormSuccess() {
     const form = document.querySelector('.contact-form');
     if (form) {
-        form.addEventListener('submit', function() {
+        form.addEventListener('submit', function () {
             setTimeout(() => {
                 const alert = document.querySelector('.alert-success');
                 if (alert) {
-                    alert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    alert.scrollIntoView({behavior: 'smooth', block: 'center'});
                 }
             }, 500);
         });
@@ -153,7 +153,7 @@ function initGalleryLightbox() {
 
     galleryImages.forEach(img => {
         img.style.cursor = 'pointer';
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function () {
             showImageModal(this.src, this.alt);
         });
     });
@@ -241,7 +241,7 @@ function initScrollToTop() {
  * Format Phone Number
  */
 function formatPhoneNumber(input) {
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function () {
         let value = this.value.replace(/\D/g, '');
         if (value.length > 10) {
             value = value.slice(0, 10);
@@ -260,7 +260,7 @@ function initProjectFilter() {
     const filterButtons = document.querySelectorAll('.filter-btn');
 
     filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
 
@@ -282,7 +282,7 @@ function initProjectFilter() {
 /**
  * Initialize all on page load
  */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initNavbar();
     initSmoothScroll();
     initFormValidation();
@@ -297,6 +297,28 @@ document.addEventListener('DOMContentLoaded', function() {
         formatPhoneNumber(input);
     });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const scroller = document.getElementById("autoStrip");
+  const cards = scroller.querySelectorAll(".photo-card");
+  const cardCount = cards.length;
+  let index = 0;
+
+  function goNext() {
+    index = (index + 1) % cardCount;
+    const cardWidth = scroller.clientWidth;
+    scroller.scrollTo({
+      left: index * cardWidth,
+      behavior: "smooth"
+    });
+  }
+
+  setInterval(goNext, 3000);
+});
+
+
+
 
 /**
  * Console Log on Page Load

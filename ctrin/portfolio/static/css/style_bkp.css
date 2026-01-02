@@ -1405,32 +1405,3 @@ footer a:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-primary-hover);
 }
-
-
-/* wrapper: no own scroll */
-.photo-strip-wrapper {
-  overflow: hidden;              /* was: overflow-x: auto */
-  position: relative;
-}
-
-/* scroller: handles scroll + snapping */
-.photo-strip {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;              /* move scroll here */
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-
-  /* hide scrollbar cross‑browser */
-  -ms-overflow-style: none;      /* IE/Edge */
-  scrollbar-width: none;         /* Firefox */
-}
-.photo-strip::-webkit-scrollbar {
-  display: none;                 /* Chrome/Safari/Opera */
-}
-
-.photo-card {
-  flex: 0 0 100%;
-  scroll-snap-align: center;
-}
-
